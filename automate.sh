@@ -1,6 +1,8 @@
 #!/bin/sh
 
 mv vuln.csv vuln_"$(date +%Y-%m-%d_%H-%M-%S)".csv
+touch "vuln.csv"
+: > "failed.txt"
 
 for image in $(cat testImageNames.txt)
 do
@@ -9,8 +11,8 @@ do
     	while true
     	do
             	output=$(anchore-cli --url "http://localhost:8228/v1" --u "admin" --p "foobar" image add "$image:latest")
-            	echo "$output" | grep "error_code=REGISTRY_PERMISSION_DENIED'}" -q && echo "Permission denied to scan image." && success=false && break
-            	echo "$output" | grep "Analysis Status: analyzed" -q && break || (echo "Not finished, sleeping..." && sleep 10)
+            	echo "$output" | grep "error_code=REGISTRY_PERMISSION_DENIED'}" -q && echo "Permission denied to scan image."&& echo "$image" >> failed.txt && success=false && break
+            	echo "$output" | grep "Analysis Status: analyzed" -q && break || (echo "Not finished, sleeping..." && sleep 20)
     	done
     	if $success
     	then

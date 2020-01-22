@@ -14,7 +14,7 @@ while page_count < 41:
 	page_count +=1
 	url = urlpage.format(page_count)
 	# run firefox webdriver
-	driver = webdriver.Firefox(executable_path = '/home/katrinewi/Documents/scraper-testin/geckodriver')
+	driver = webdriver.Firefox(executable_path = '/home/maltrine/aevolume/Master-thesis-scripts/geckodriver')
 	# get web page
 	driver.get(url)
 	# sleep for 10s, to let the page fully load
@@ -25,31 +25,26 @@ while page_count < 41:
 	print('Firefox Webdriver - Number of results', len(results)*page_count)
 
 	for x in results:
-    	info = x.text.split('\n')
-    	image_type = ""
-    	downloads = ""
-    	stars = ""
-    	last_updated = ""
-    	#Set image type
-    	if('OFFICIAL' in x.text):
-        	image_type = "official"
-        	downloads = info[1]
-        	stars = info[3]
-        	last_updated = info[6]
-    	elif('VERIFIED' in x.text):
-        	image_type = "verified"
-        	last_updated = info[3]
-    	else:
-        	image_type = "community"
-        	downloads = info[0]
-        	stars = info[2]
-        	#liste = info[5].split('•')
-        	#last_updated = liste[1] if (len(liste)>0) else ""
-    	image_link = x.get_attribute('href')
-    	if(image_type != "community"):
-        	data.append({"image" : image_link.split("/")[-1], "type" : image_type, "downloads" : downloads, "stars": stars, "last_updated":last_updated})
-    	else:
-        	data.append({"image" : image_link.split("/")[-2]+"/"+image_link.split("/")[-1], "type" : image_type, "downloads" : downloads, "stars": stars, "last_updated":last_updated})
+		info = x.text.split('\n')
+		image_type = ""
+		downloads = ""
+		stars = ""
+		#Set image type
+		if('OFFICIAL' in x.text):
+			image_type = "official"
+			downloads = info[1]
+			stars = info[3]
+		elif('VERIFIED' in x.text):
+			image_type = "verified"
+		else:
+			image_type = "community"
+			downloads = info[0]
+				stars = info[2]
+		image_link = x.get_attribute('href')
+		if(image_type != "community"):
+			data.append({"image" : image_link.split("/")[-1], "type" : image_type, "downloads" : downloads, "stars": stars, "last_updated":last_updated})
+		else:
+			data.append({"image" : image_link.split("/")[-2]+"/"+image_link.split("/")[-1], "type" : image_type, "downloads" : downloads, "stars": stars, "last_updated":last_updated})
 
 	print(data)
 	time.sleep(20)
