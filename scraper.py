@@ -40,7 +40,10 @@ while page_count < 60:
 		else:
 			image_type = "community"
 			downloads = info[0]
-			stars = info[2]
+			if(info[2].isdigit()):
+				stars = info[2]
+			else:
+				stars = 0
 		image_link = x.get_attribute('href')
 		if(image_type == "official"):
 			tmp = image_link.split("/")[-1] + ", " + image_type + ", " + downloads + ", "+stars +"\n"
