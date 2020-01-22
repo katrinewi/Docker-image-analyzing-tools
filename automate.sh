@@ -4,7 +4,7 @@ mv vuln.csv vuln_"$(date +%Y-%m-%d_%H-%M-%S)".csv
 touch "vuln.csv"
 : > "failed.txt"
 
-for image in $(cat testImageNames.txt)
+for image in $(cat ./scraper-files/image-names.txt)
 do
     	echo "Adding $image..."
     	success=true

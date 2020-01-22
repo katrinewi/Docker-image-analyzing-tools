@@ -11,7 +11,7 @@ data = ""
 image_names = open("./scraper-files/image-names.txt","w")
 image_info = open("./scraper-files/image-info.csv", "w")
 
-while page_count < 41:
+while page_count < 60:
 	page_count +=1
 	url = urlpage.format(page_count)
 	# run firefox webdriver
@@ -43,17 +43,22 @@ while page_count < 41:
 			stars = info[2]
 		image_link = x.get_attribute('href')
 		if(image_type == "official"):
-			data += image_link.split("/")[-1] + ", " + image_type + ", " + downloads + ", "+stars +"\n"
+			tmp = image_link.split("/")[-1] + ", " + image_type + ", " + downloads + ", "+stars +"\n"
+			data += tmp
 			image_names.write(image_link.split("/")[-1]+"\n")
+			image_info.write(tmp)
 		elif(image_type == "community"):
-			data += image_link.split("/")[-2]+"/"+image_link.split("/")[-1]  + ", " + image_type + ", " + downloads + ", "+stars+"\n"
+			tmp =  image_link.split("/")[-2]+"/"+image_link.split("/")[-1]  + ", " + image_type + ", " + downloads + ", "+stars+"\n"
+			data += tmp
 			image_names.write(image_link.split("/")[-2]+"/"+image_link.split("/")[-1] +"\n")
+			image_info.write(tmp)
 		else:
-			data += image_link.split("/")[-1]+", " + image_type + "\n"
+			tmp = image_link.split("/")[-1]+", " + image_type + "\n"
+			data += tmp
 			image_names.write(image_link.split("/")[-1]+"\n")
+			image_info.write(tmp)
 
-	image_info.write(data)
-	time.sleep(10)
+	time.sleep(5)
 	driver.close()
 
 # close driver
