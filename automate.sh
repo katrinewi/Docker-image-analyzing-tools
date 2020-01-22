@@ -12,6 +12,7 @@ do
     	do
             	output=$(anchore-cli --url "http://localhost:8228/v1" --u "admin" --p "foobar" image add "$image:latest")
             	echo "$output" | grep "error_code=REGISTRY_PERMISSION_DENIED'}" -q && echo "Permission denied to scan image."&& echo "$image" >> failed.txt && success=false && break
+				echo "$output" | grep "error_code=REGISTRY_IMAGE_NOT_FOUND'}" -q && echo "Image not found."&& echo "$image" >> failed.txt && success=false && break
             	echo "$output" | grep "Analysis Status: analyzed" -q && break || (echo "Not finished, sleeping..." && sleep 20)
     	done
     	if $success
@@ -20,4 +21,3 @@ do
             	anchore-cli --url "http://localhost:8228/v1" --u "admin" --p "foobar" image vuln "$image:latest" all | sed -r 's/  +/,/g' | sed 's/,$//' | egrep -v '^Vulnerability ID' | awk '{ print "'"$image"',"$1 }' >> vuln.csv
     	fi
 done
-
