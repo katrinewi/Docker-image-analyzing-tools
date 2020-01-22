@@ -51,7 +51,7 @@ while page_count < 60:
 			image_names.write(image_link.split("/")[-1]+"\n")
 			image_info.write(tmp)
 		elif(image_type == "community"):
-			tmp =  image_link.split("/")[-2]+"/"+image_link.split("/")[-1]  + ", " + image_type + ", " + downloads + ", "+stars+"\n"
+			tmp =  image_link.split("/")[-2]+"/"+image_link.split("/")[-1]  + ", " + image_type + ", " + downloads + ", " + str(stars) + "\n"
 			data += tmp
 			image_names.write(image_link.split("/")[-2]+"/"+image_link.split("/")[-1] +"\n")
 			image_info.write(tmp)
