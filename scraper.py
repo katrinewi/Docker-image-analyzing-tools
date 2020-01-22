@@ -3,12 +3,13 @@ from selenium import webdriver
 import time
 import pandas as pd
 
-
 # specify the url
 urlpage = 'https://hub.docker.com/search/?q=&type=image&page={}'
 page_count = 0
-print(urlpage)
-data = []
+print("Scraping started")
+data = ""
+image_names = open("./scraper-files/image-names.txt","w")
+image_info = open("./scraper-files/image-info.csv", "w")
 
 while page_count < 41:
 	page_count +=1
@@ -22,7 +23,7 @@ while page_count < 41:
 	# find elements by xpath
 	results = driver.find_elements_by_xpath("//*[@class='imageSearchResult styles__searchResult___EBKah styles__clickable___2bfia']")
 
-	print('Firefox Webdriver - Number of results', len(results)*page_count)
+	print('Scraping page: ', page_count)
 
 	for x in results:
 		info = x.text.split('\n')
@@ -39,15 +40,21 @@ while page_count < 41:
 		else:
 			image_type = "community"
 			downloads = info[0]
-				stars = info[2]
+			stars = info[2]
 		image_link = x.get_attribute('href')
-		if(image_type != "community"):
-			data.append({"image" : image_link.split("/")[-1], "type" : image_type, "downloads" : downloads, "stars": stars, "last_updated":last_updated})
+		if(image_type == "official"):
+			data += image_link.split("/")[-1] + ", " + image_type + ", " + downloads + ", "+stars +"\n"
+			image_names.write(image_link.split("/")[-1]+"\n")
+		elif(image_type == "community"):
+			data += image_link.split("/")[-2]+"/"+image_link.split("/")[-1]  + ", " + image_type + ", " + downloads + ", "+stars+"\n"
+			image_names.write(image_link.split("/")[-2]+"/"+image_link.split("/")[-1] +"\n")
 		else:
-			data.append({"image" : image_link.split("/")[-2]+"/"+image_link.split("/")[-1], "type" : image_type, "downloads" : downloads, "stars": stars, "last_updated":last_updated})
+			data += image_link.split("/")[-1]+", " + image_type + "\n"
+			image_names.write(image_link.split("/")[-1]+"\n")
 
-	print(data)
-	time.sleep(20)
+	image_info.write(data)
+	time.sleep(10)
+	driver.close()
 
 # close driver
 driver.quit()
