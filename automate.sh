@@ -4,7 +4,7 @@ mv vuln.csv vuln_"$(date +%Y-%m-%d_%H-%M-%S)".csv
 touch "vuln.csv"
 : > "failed.txt"
 
-for image in $(cat ./scraper-files/image-names2.txt)
+for image in $(cat ./scraper-files/image-names4.txt)
 do
     	echo "Adding $image..."
     	success=true
@@ -14,7 +14,9 @@ do
             	echo "$output" | grep "error_code=REGISTRY_PERMISSION_DENIED'}" -q && echo "Permission denied to scan image."&& echo "$image" >> failed.txt && success=false && break
 				echo "$output" | grep "error_code=REGISTRY_IMAGE_NOT_FOUND'}" -q && echo "Image not found."&& echo "$image" >> failed.txt && success=false && break
 				echo "$output" | grep "HTTP Code: 400" -q && echo "Unknown error occured."&& echo "$image" >> failed.txt && success=false && break
+				echo "$output" | grep "Analysis Status: analysis_failed" -q && echo "Analysis failed." && echo "$image" >> failed.txt && success=false && break 
             	echo "$output" | grep "Analysis Status: analyzed" -q && break || (echo "Not finished, sleeping..." && sleep 20)
+				echo "$output"
     	done
     	if $success
     	then
