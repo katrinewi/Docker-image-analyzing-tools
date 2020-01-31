@@ -5,7 +5,7 @@ touch "vuln.csv"
 mv failed.txt failed_"$(date +%Y-%m-%d_%H-%M-%S)".txt
 touch "failed.txt"
 
-for image in $(cat ./iteration_files/image-names9.txt)
+for image in $(cat ./scraper-files/image-names.txt)
 do
     	echo "Adding $image..."
     	success=true
@@ -27,7 +27,7 @@ do
     	if $success
     	then
             	echo "Finished, writing result to file..."
-            	anchore-cli --url "http://localhost:8228/v1" --u "admin" --p "foobar" image vuln "$image:latest" all | sed -r 's/,/;/g' |sed -r 's/  +/,/g'| sed 's/,$//' | egrep -v '^Vulnerability ID' | awk '{ print "'"$image"',"$1 }' | awk -F, -v OFS=, '{if(NF=6) {k=$NF; $6=""; $7=k; print}else{for(i=NF;i<=7;i++){$i=$i""}print}}'>> vuln.csv
+            	anchore-cli --url "http://localhost:8228/v1" --u "admin" --p "foobar" image vuln "$image:latest" all | sed -r 's/,/;/g' |sed -r 's/  +/,/g'| sed 's/,$//' | egrep -v '^Vulnerability ID' | awk '{ print "'"$image"',"$1 }' | awk -F, -v OFS=, '{if(NF==6) {k=$NF; $6=""; $7=k; print}else{for(i=NF;i<=7;i++){$i=$i""}print}}'>> vuln.csv
 
     	fi
 done
