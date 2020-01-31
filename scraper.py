@@ -1,17 +1,15 @@
 import urllib.request
 from selenium import webdriver
 import time
-import pandas as pd
 
 # specify the url
 urlpage = 'https://hub.docker.com/search/?q=&type=image&page={}'
 page_count = 0
 print("Scraping started")
-data = ""
 image_names = open("./scraper-files/image-names.txt","w")
 image_info = open("./scraper-files/image-info.csv", "w")
 
-while page_count < 60:
+while page_count < 100:
 	page_count +=1
 	url = urlpage.format(page_count)
 	# run firefox webdriver
@@ -43,21 +41,18 @@ while page_count < 60:
 			if(info[2].isdigit()):
 				stars = info[2]
 			else:
-				stars = 0
+				stars = ""
 		image_link = x.get_attribute('href')
 		if(image_type == "official"):
-			tmp = image_link.split("/")[-1] + ", " + image_type + ", " + downloads + ", "+stars +"\n"
-			data += tmp
+			tmp = image_link.split("/")[-1] + "," + image_type + "," + downloads  + ","+stars  +"\n"
 			image_names.write(image_link.split("/")[-1]+"\n")
 			image_info.write(tmp)
 		elif(image_type == "community"):
-			tmp =  image_link.split("/")[-2]+"/"+image_link.split("/")[-1]  + ", " + image_type + ", " + downloads + ", " + str(stars) + "\n"
-			data += tmp
+			tmp =  image_link.split("/")[-2]+"/"+image_link.split("/")[-1]  + "," + image_type + "," + downloads + "," + str(stars)  + "\n"
 			image_names.write(image_link.split("/")[-2]+"/"+image_link.split("/")[-1] +"\n")
 			image_info.write(tmp)
 		else:
-			tmp = image_link.split("/")[-1]+", " + image_type + "\n"
-			data += tmp
+			tmp = image_link.split("/")[-1]+"," + image_type + "," + "," + "\n"
 			image_names.write(image_link.split("/")[-1]+"\n")
 			image_info.write(tmp)
 
@@ -66,7 +61,4 @@ while page_count < 60:
 
 # close driver
 driver.quit()
-# save to pandas dataframe
-df = pd.DataFrame(data)
-print(df)
 
