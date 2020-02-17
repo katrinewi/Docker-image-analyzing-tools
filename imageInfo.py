@@ -1,12 +1,16 @@
 import urllib.request, json
 from urllib.error import HTTPError 
 
-image_names = [line.rstrip('\n') for line in open("names.txt")]
+print("Started")
+image_names = [line.rstrip('\n') for line in open("../image-names_analyzed.txt")]
+print("Finished reading image names")
 results = open("./results.csv","w")
 failed = open("./failed.txt","w")
 results.write("image_name,pull_count,star_count,last_updated" + "\n")
 
+print("Starting gathering information")
 for i in image_names:
+    print(i)
     if ("/" in i):
         url_page = 'https://hub.docker.com/v2/repositories/{}'
     else:    
