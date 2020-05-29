@@ -53,3 +53,6 @@ while page_count < 100:
     
 #Close driver
 driver.quit()
+#Close files
+image_names.close()
+image_info.close()
