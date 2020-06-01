@@ -1,4 +1,3 @@
-import urllib.request
 from selenium import webdriver
 import time
 
