@@ -23,3 +23,15 @@ These scripts create two files each: results\_apiv1.csv and failed\_apiv1.txt, a
  
 In order to run the script, Docker Compose is required to run. Docker Compose is started with the following command: `docker-compose up -d`. The script will first try to rename the vuln.csv and the failed.txt files. Because of the possible long run time of the script, it is important that this content is not overwritten by mistake. Thus, an error will be outputted if these files are not found, but the script will continue to run as expected. The script takes the image_names.txt file as input, which constitutes of image names separated by line shift. If this file is not to be found, the script will not run. Docker is by default running as root, and thus, needs to be run using the SUDO command. We highly recommend running Docker as a non-root user.
 
+## Referencing our work
+If you use our scripts in your work please use the following reference:
+
+@mastersthesis{WistHelsem2020,
+  title={{An Extensive Analysis of the Current Vulnerability Landscape in Docker Hub Images}},
+  author={Wist, Katrine and Helsem, Malene},
+  year={2020},
+  school={Norwegian University of Science and Technology (NTNU)}
+}
+
+
+
