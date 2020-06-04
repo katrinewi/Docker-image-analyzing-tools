@@ -26,8 +26,8 @@ do
         if [ "$SECONDS" -gt "3600" ]
         then
             echo "Timeout"&& echo "$image,timeout" >> failed.txt && success=false && break
-	    fi
-	    echo "$output" | grep "Analysis Status: analyzed" -q && break || (echo "Not finished, sleeping..." && sleep 20)
+	fi
+	echo "$output" | grep "Analysis Status: analyzed" -q && break || (echo "Not finished, sleeping..." && sleep 20)
     done
     if $success
     then
