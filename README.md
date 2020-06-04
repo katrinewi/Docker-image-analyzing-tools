@@ -1,6 +1,6 @@
 # Docker image analyzing tools
 
-This repository contains scripts that can be used for performing an analysis of Docker Hub images. The web scraper collects images from the Docker Hub web page along with the image type, the ImageInfo scripts gather additional image information, and the automate script runs the Anchore Engine vulnerability scanniner automatically on images.
+This repository contains scripts that can be used for performing an analysis of Docker Hub images. The web scraper collects images from the Docker Hub web page along with the image type, the ImageInfo scripts gather additional image information, and the automate script runs the Anchore Engine vulnerability scanniner automatically on images with the *latest* tag.
 
 ## Web Scraper
 Requires the following dependencies:
