@@ -3,15 +3,15 @@ import time
 
 urlpage = 'https://hub.docker.com/search/?q=&type=image&page={}'
 page_count = 0
-print("Scraping started")
+print("Scraping started ...")
 image_names = open("./image-names.txt","w")
 image_info = open("./image-info.csv", "w")
 
 while page_count < 100:
     page_count +=1
     url = urlpage.format(page_count)
-    #Run firefox webdriver
-    driver = webdriver.Firefox(executable_path = '/usr/local/Cellar/geckodriver/geckodriver')
+    #Run the firefox webdriver, this is where you need to specify the path to Geckodriver
+    driver = webdriver.Firefox(executable_path = '/path-to-geckodriver-here')
     #Get web page
     driver.get(url)
     #Sleep for 10s, to let the page fully load
@@ -39,8 +39,8 @@ while page_count < 100:
             image_names.write(image_link.split("/")[-1]+"\n")
             image_info.write(tmp)
         elif(image_type == "community"):
-            tmp =  image_link.split("/")[-2] + "/" + image_link.split("/")[-1] + "," + image_type + "\n"
-            image_names.write(image_link.split("/")[-2]+"/"+image_link.split("/")[-1] +"\n")
+            tmp = image_link.split("/")[-2] + "/" + image_link.split("/")[-1] + "," + image_type + "\n"
+            image_names.write(image_link.split("/")[-2] + "/" + image_link.split("/")[-1] + "\n")
             image_info.write(tmp)
         else:
             tmp = image_link.split("/")[-1] + "," + image_type + "\n"
