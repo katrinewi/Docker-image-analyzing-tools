@@ -2,7 +2,7 @@
 
 #################################################################################################
 #
-# Automate the process of analyzing Docker images using the Anchore Engine vulnerability scanner
+# Automate the process of analyzing Docker images with the latest tag using the Anchore Engine vulnerability scanner
 # Copyright (C) 2020 Katrine Wist and Malene Helsem
 #
 # This program is free software: you can redistribute it and/or
