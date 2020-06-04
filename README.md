@@ -7,7 +7,7 @@ Requires the following dependencies:
 - Selenium: An explanation of how to to install Selenium is given here: https://pypi.org/project/selenium/
 - Geckodriver: The Geckodriver executable can be downloaded from the following page https://github.com/mozilla/geckodriver/releases
 
-In the scraper script, we specify the driver on line 15. The path must be changed to the location of the Gecodriver executable on the user's computer. Alternatively, it can be added to the PATH by placing it in the /usr/bin or /usr/local/bin folder, and remove everything inside the brackets on line 15 in the script. It is important to use versions of Selenium, Geckodriver, and Firefox that are compatible.
+In the scraper script, we specify the driver on line 34. The path must be changed to the location of the Gecodriver executable on the user's computer. Alternatively, it can be added to the PATH by placing it in the /usr/bin or /usr/local/bin folder, and remove everything inside the brackets on line 34 in the script. It is important to use versions of Selenium, Geckodriver, and Firefox that are compatible.
 
 The scraper creates two files: image-names.txt and image-info.csv, and writes the gathered data to them. If these files already exist, the content inside will be overwritten. 
 
